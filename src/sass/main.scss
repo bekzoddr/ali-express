@@ -17,8 +17,13 @@ body {
         list-style: none;
     }
 
+    .white {
+        color: white;
+    }
+
     a {
         text-decoration: none;
+        color: black;
     }
 
     button {
@@ -31,4 +36,10 @@ body {
     max-width: 1400px;
     margin: 0 auto;
     padding: 0 20px;
+}
+
+.empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }

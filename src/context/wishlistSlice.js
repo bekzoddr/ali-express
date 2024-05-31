@@ -1,23 +1,25 @@
-import { createSlice } from "@reduxjs/toolkit";
+import create from "zustand";
 
-export const wishlistSlice = createSlice({
-  name: "wishlist",
-  initialState: {
-    value: JSON.parse(localStorage.getItem("wishlist")) || [],
-  },
-  reducers: {
-    toggleToWishes(state, { payload }) {
-      let index = state.value.findIndex((el) => el.id === payload.id);
+const getInitialWishlist = () => {
+  const savedWishlist = localStorage.getItem("wishlist");
+  return savedWishlist ? JSON.parse(savedWishlist) : [];
+};
+
+const useWishlistStore = create((set, get) => ({
+  wishlist: getInitialWishlist(),
+  toggleToWishes: (item) => {
+    set((state) => {
+      const index = state.wishlist.findIndex((el) => el.id === item.id);
+      let updatedWishlist;
       if (index < 0) {
-        state.value = [...state.value, payload];
+        updatedWishlist = [...state.wishlist, item];
       } else {
-        state.value = state.value.filter((el) => el.id !== payload.id);
+        updatedWishlist = state.wishlist.filter((el) => el.id !== item.id);
       }
-      localStorage.setItem("wishlist", JSON.stringify(state.value));
-    },
+      localStorage.setItem("wishlist", JSON.stringify(updatedWishlist));
+      return { wishlist: updatedWishlist };
+    });
   },
-});
+}));
 
-export const { toggleToWishes } = wishlistSlice.actions;
-
-export default wishlistSlice.reducer;
+export default useWishlistStore;

@@ -4,6 +4,8 @@ import { RiBookOpenFill } from "react-icons/ri";
 import { BsBoxFill, BsEmojiSmile } from "react-icons/bs";
 import { FaShoppingCart } from "react-icons/fa";
 import axios from "axios";
+import { FaHeart } from "react-icons/fa6";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   const [isShrink, setIsShrink] = useState(false);
@@ -48,8 +50,10 @@ const Header = () => {
     <header>
       <div className="container action">
         <div className={`navbar ${isShrink ? "shrink" : ""}`}>
-          <img width={150} src={logo} alt="logo" />
-          <h1>AliExpress</h1>
+          <Link className="logo" to={"/"}>
+            <img width={150} src={logo} alt="logo" />
+            <h1 color="black">AliExpress</h1>
+          </Link>
           <div className="navbar__items">
             <button className="nav__button">
               <RiBookOpenFill className="nav__icon" />
@@ -72,8 +76,10 @@ const Header = () => {
                 <h2>Заказы</h2>
               </button>
               <button className="nav__button">
-                <FaShoppingCart className="nav__icon" />
-                <h2>Корзина</h2>
+                <Link to={"/wishlist"} className="white">
+                  <FaHeart className="nav__icon" />
+                  <h2>Корзина</h2>
+                </Link>
               </button>
               <button className="nav__button">
                 <BsEmojiSmile color="yellow" className="nav__icon" />

@@ -1,11 +1,14 @@
-import React, { memo } from "react";
-import { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import axios from "../../api";
-import { useSelector } from "react-redux";
 import Products from "../../components/products/Products";
+import useWishlistStore from "../../context/wishlistSlice";
+import { Button } from "@mui/material";
+import image from "../../assets/images/empty.png";
+import { Link } from "react-router-dom";
 const Wishlist = () => {
-  const wishes = useSelector((state) => state.wishlist.value);
+  const wishes = useWishlistStore((state) => state.wishlist);
   const [data, setData] = useState([]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     axios
@@ -28,7 +31,12 @@ const Wishlist = () => {
       {wishes.length ? (
         <Products title="Wishlist" data={wishes} />
       ) : (
-        <h2>Empty</h2>
+        <div className="empty container">
+          <img width={500} src={image} alt="" />
+          <Link to="/">
+            <Button variant="contained">Shop Now</Button>
+          </Link>
+        </div>
       )}
       <br />
       <br />

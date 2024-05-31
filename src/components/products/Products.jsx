@@ -6,8 +6,8 @@ import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import { FaRegHeart, FaHeart } from "react-icons/fa6";
-import { useDispatch, useSelector } from "react-redux";
-import { toggleToWishes } from "../../context/wishlistSlice";
+import useWishlistStore from "../../context/wishlistSlice";
+
 function CustomTabPanel(props) {
   const { children, value, index, ...other } = props;
 
@@ -43,8 +43,8 @@ function a11yProps(index) {
 
 const Products = ({ data, title, categorys }) => {
   const [value, setValue] = useState(0);
-  const dispatch = useDispatch();
-  const wishes = useSelector((state) => state.wishlist.value);
+  const wishes = useWishlistStore((state) => state.wishlist); // get wishlist from Zustand store
+  const toggleToWishes = useWishlistStore((state) => state.toggleToWishes); // get toggleToWishes action from Zustand store
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -54,7 +54,7 @@ const Products = ({ data, title, categorys }) => {
     <div key={el.id} className="product__card">
       <div className="product__image">
         <h2>SALE</h2>
-        <button onClick={() => dispatch(toggleToWishes(el))}>
+        <button onClick={() => toggleToWishes(el)}>
           {wishes.some((w) => w.id === el.id) ? (
             <FaHeart className="likes" />
           ) : (
@@ -80,6 +80,7 @@ const Products = ({ data, title, categorys }) => {
       </div>
     </div>
   ));
+
   let tabs = categorys?.map((category, index) => (
     <Tab key={index} label={category} {...a11yProps(index)} />
   ));
