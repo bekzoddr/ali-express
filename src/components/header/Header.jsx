@@ -65,7 +65,7 @@ const Header = () => {
                 onChange={(e) => setSearchValue(e.target.value)}
                 onFocus={() => setIsFocused(true)}
                 onBlur={() => setIsFocused(false)}
-                type="text"
+                type="search"
                 placeholder="search..."
               />
               <button>Найти</button>
